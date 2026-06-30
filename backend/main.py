@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+import orchestrator
 
 app = FastAPI()
 app.add_middleware(
@@ -9,12 +11,13 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-from pydantic import BaseModel
 
-class EssayPayload(BaseModel):
-    essay: str
-    prompt: str | None = None
+class EvaluateRequest(BaseModel):
+    text: str
+    rubric: dict
+
 
 @app.post("/evaluate")
-async def evaluate(payload: EssayPayload):
-    return {"status": "stub", "scores": {}}
+async def evaluate(payload: EvaluateRequest):
+    result = await orchestrator.evaluate(payload.text, payload.rubric)
+    return result

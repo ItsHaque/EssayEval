@@ -20,7 +20,7 @@ def analyze(text: str, rubric: dict) -> AnalyzerResult:
 
     word_count = max(len(text.split()), 1)
     error_rate = len(matches) / word_count * 100
-    score = max(0, 100 - error_rate * 10)
+    score = max(0, 100 - error_rate * 3)  # softer penalty
 
     suggestions = [f"'{m.context}' — {m.message}" for m in matches[:3]]
 

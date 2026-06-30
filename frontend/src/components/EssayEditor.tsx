@@ -53,7 +53,6 @@ export default function EssayEditor() {
     ? wordCount < activeRubric.wordLimitMin || wordCount > activeRubric.wordLimitMax
     : false
 
-  const handlePaste = () => {} // TipTap handles paste natively
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
