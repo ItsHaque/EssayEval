@@ -15,14 +15,14 @@ def analyze(text: str, rubric: dict) -> AnalyzerResult:
     coleman_liau = textstat.coleman_liau_index(text)
     avg_grade = (fk_grade + smog + coleman_liau) / 3
 
-    # Map grade level to 0-100 score (grade 6 -> 90, grade 14+ -> 30)
-    # Linear interpolation between those two anchor points
-    if avg_grade <= 6:
+    # Map grade level to 0-100 score
+    # grade 8 -> 90 (ideal for clear writing), grade 18+ -> 20 (extremely complex)
+    if avg_grade <= 8:
         score = 90
-    elif avg_grade >= 14:
-        score = 30
+    elif avg_grade >= 18:
+        score = 20
     else:
-        score = 90 - ((avg_grade - 6) / (14 - 6)) * (90 - 30)
+        score = 90 - ((avg_grade - 8) / (18 - 8)) * (90 - 20)
 
     # Flag overly long sentences
     for sent in doc.sents:
