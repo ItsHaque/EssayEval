@@ -3,6 +3,8 @@ import StarterKit from '@tiptap/starter-kit'
 import { useEffect, useState } from 'react'
 import { useSubmissionStore } from '@/stores/submissionStore'
 import { useRubricStore } from '@/stores/rubricStore'
+import { evaluateEssay } from '@/api/evaluate'
+import { useEvaluationStore } from '@/stores/evaluationStore'
 
 export default function EssayEditor() {
   const [wordCount, setWordCount] = useState(0)
@@ -10,6 +12,7 @@ export default function EssayEditor() {
   const rubrics = useRubricStore(state => state.rubrics)
   const addSubmission = useSubmissionStore(state => state.addSubmission)
   const activeRubric = rubrics.find(r => r.id === activeRubricId)
+  
 
   const editor = useEditor({
     extensions: [StarterKit],
@@ -20,6 +23,25 @@ export default function EssayEditor() {
       setWordCount(words.length)
     },
   })
+
+  const setEvaluating = useEvaluationStore(state => state.setEvaluating)
+  const addResult = useEvaluationStore(state => state.addResult)
+  const isEvaluating = useEvaluationStore(state => state.isEvaluating)
+
+  const handleEvaluate = async () => {
+    if (!editor || !activeRubric) return
+    const text = editor.getText()
+    setEvaluating(true)
+    try {
+      const result = await evaluateEssay(text, activeRubric)
+      addResult(result)
+      console.log('Evaluation result:', result)
+    } catch (err) {
+      console.error('Evaluation failed:', err)
+    } finally {
+      setEvaluating(false)
+    }
+  }
 
   useEffect(() => {
     if (!editor) return
@@ -84,6 +106,13 @@ export default function EssayEditor() {
         {wordCount} words
         {activeRubric && ` (limit: ${activeRubric.wordLimitMin}–${activeRubric.wordLimitMax})`}
       </div>
+      <button
+        onClick={handleEvaluate}
+        disabled={!activeRubric || isEvaluating}
+        className="w-full py-2 rounded bg-purple-600 text-white text-sm font-medium disabled:opacity-50"
+      >
+        {isEvaluating ? 'Evaluating...' : 'Evaluate'}
+      </button>
     </div>
   )
 }
