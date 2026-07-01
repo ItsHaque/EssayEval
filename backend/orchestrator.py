@@ -1,12 +1,13 @@
 import uuid
 from datetime import datetime, timezone
-from analyzers import clarity, vocabulary, grammar
+from analyzers import clarity, vocabulary, grammar, relevance
 from lib.scoring import compute_band, compute_grade, compute_overall
 
 REGISTRY = {
     'cat_clarity': clarity.analyze,
     'cat_vocabulary': vocabulary.analyze,
     'cat_grammar': grammar.analyze,
+    'cat_relevance': relevance.analyze,
 }
 
 BAND_LABELS = {4: "Excellent", 3: "Good", 2: "Needs Improvement", 1: "Poor"}
