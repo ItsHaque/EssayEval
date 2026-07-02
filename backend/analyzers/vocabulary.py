@@ -58,6 +58,13 @@ def compute_mtld(lemmas: list[str], threshold: float = 0.72) -> float:
 
 def analyze(text: str, rubric: dict) -> AnalyzerResult:
     doc = nlp(text)
+    named_entities = {ent.start_char for ent in doc.ents}
+    entity_spans = [(ent.start_char, ent.end_char) for ent in doc.ents]
+
+    def is_named_entity(token_start: int, token_text: str) -> bool:
+        in_span = any(start <= token_start < end for start, end in entity_spans)
+        is_camel = token_text[0].isupper() and any(c.isupper() for c in token_text[1:])
+        return in_span or is_camel
     tokens = [t for t in doc if not t.is_punct and not t.is_stop and t.is_alpha]
     lemmas = [t.lemma_.lower() for t in tokens]
 
@@ -78,7 +85,7 @@ def analyze(text: str, rubric: dict) -> AnalyzerResult:
     for token in tokens:
         band = get_frequency_band(token.text.lower())
         band_counts[band] += 1
-        if band == 4:
+        if band == 4 and not is_named_entity(token.idx, token.text):
             issues.append(TextIssue(
                 start=token.idx,
                 end=token.idx + len(token.text),

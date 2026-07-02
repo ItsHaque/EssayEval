@@ -5,6 +5,7 @@ import RubricSelector from '@/components/RubricSelector'
 import { useRubricStore } from '@/stores/rubricStore'
 import type { Rubric } from '@/types/rubric'
 import EssayEditor from '@/components/EssayEditor'
+import ResultsPanel from './components/ResultsPanel'
 
 function App() {
   const [showBuilder, setShowBuilder] = useState(false)
@@ -40,7 +41,7 @@ function App() {
         </div>
       }
       center={<EssayEditor />}
-      right={<div className="p-4 text-sm text-gray-500">Results panel</div>}
+      right={<ResultsPanel />}
     />
   )
 }
