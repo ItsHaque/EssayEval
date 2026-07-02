@@ -10,7 +10,6 @@ export default function EssayEditor() {
   const [wordCount, setWordCount] = useState(0)
   const activeRubricId = useRubricStore(state => state.activeRubricId)
   const rubrics = useRubricStore(state => state.rubrics)
-  const addSubmission = useSubmissionStore(state => state.addSubmission)
   const activeRubric = rubrics.find(r => r.id === activeRubricId)
   
 
@@ -31,11 +30,12 @@ export default function EssayEditor() {
   const handleEvaluate = async () => {
     if (!editor || !activeRubric) return
     const text = editor.getText()
+    const store = useSubmissionStore.getState()
+    const submission = store.submissions[store.submissions.length - 1]
     setEvaluating(true)
     try {
-      const result = await evaluateEssay(text, activeRubric)
+      const result = await evaluateEssay(text, activeRubric, submission?.id ?? '')
       addResult(result)
-      console.log('Evaluation result:', result)
     } catch (err) {
       console.error('Evaluation failed:', err)
     } finally {
@@ -59,14 +59,20 @@ export default function EssayEditor() {
     const timeout = setTimeout(() => {
       const text = editor.getText()
       if (!text.trim()) return
-      addSubmission({
-        id: crypto.randomUUID(),
-        label: 'Draft',
-        text,
-        wordCount,
-        rubricId: activeRubricId ?? '',
-        createdAt: new Date().toISOString(),
-      })
+      const store = useSubmissionStore.getState()
+      const existing = store.submissions[store.submissions.length - 1]
+      if (existing) {
+        store.updateSubmission(existing.id, { text, wordCount, rubricId: activeRubricId ?? '' })
+      } else {
+        store.addSubmission({
+          id: crypto.randomUUID(),
+          label: 'Draft',
+          text,
+          wordCount,
+          rubricId: activeRubricId ?? '',
+          createdAt: new Date().toISOString(),
+        })
+      }
     }, 500)
     return () => clearTimeout(timeout)
   }, [wordCount])

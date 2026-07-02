@@ -24,9 +24,10 @@ app.add_middleware(
 class EvaluateRequest(BaseModel):
     text: str
     rubric: dict
+    submissionId: str = ""
 
 
 @app.post("/evaluate")
 async def evaluate(payload: EvaluateRequest):
-    result = await orchestrator.evaluate(payload.text, payload.rubric)
+    result = await orchestrator.evaluate(payload.text, payload.rubric, payload.submissionId)
     return result

@@ -8,6 +8,7 @@ interface SubmissionStore {
   submissions: Submission[]
   addSubmission: (submission: Submission) => void
   deleteSubmission: (id: string) => void
+  updateSubmission: (id: string, patch: Partial<Submission>) => void
 }
 
 export const useSubmissionStore = create<SubmissionStore>()(
@@ -22,6 +23,9 @@ export const useSubmissionStore = create<SubmissionStore>()(
       }),
       deleteSubmission: (id) => set((state) => ({
         submissions: state.submissions.filter(s => s.id !== id)
+      })),
+      updateSubmission: (id, patch) => set((state) => ({
+        submissions: state.submissions.map(s => s.id === id ? { ...s, ...patch } : s)
       })),
     }),
     { name: 'submission-store' }
