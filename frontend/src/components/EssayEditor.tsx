@@ -5,6 +5,8 @@ import { useSubmissionStore } from '@/stores/submissionStore'
 import { useRubricStore } from '@/stores/rubricStore'
 import { evaluateEssay } from '@/api/evaluate'
 import { useEvaluationStore } from '@/stores/evaluationStore'
+import { IssueHighlight } from '@/lib/highlightEngine'
+import { applyHighlights } from '@/lib/applyHighlights'
 
 export default function EssayEditor() {
   const [wordCount, setWordCount] = useState(0)
@@ -14,7 +16,7 @@ export default function EssayEditor() {
   
 
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: [StarterKit, IssueHighlight],
     content: '',
     onUpdate: ({ editor }) => {
       const text = editor.getText()
@@ -76,6 +78,15 @@ export default function EssayEditor() {
     }, 500)
     return () => clearTimeout(timeout)
   }, [wordCount])
+
+  const results = useEvaluationStore(state => state.results)
+  const latestResult = Object.values(results).at(-1)
+
+  useEffect(() => {
+    if (!editor || !latestResult) return
+    const allIssues = latestResult.categoryScores.flatMap(c => c.issues)
+    applyHighlights(editor, allIssues)
+  }, [latestResult, editor])
 
   const isOutsideLimit = activeRubric
     ? wordCount < activeRubric.wordLimitMin || wordCount > activeRubric.wordLimitMax
