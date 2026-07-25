@@ -13,6 +13,7 @@ import {
   Legend,
 } from 'chart.js'
 import { Bar, Radar } from 'react-chartjs-2'
+import FeedbackCard from './FeedbackCard'
 
 ChartJS.register(
   CategoryScale,
@@ -122,6 +123,19 @@ export default function ResultsPanel() {
           plugins: { legend: { display: false } }
         }}
       />
+      {/* Feedback Cards */}
+        <div className="space-y-2">
+          <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+            Category Feedback
+          </div>
+          {latestResult.categoryScores.map(score => (
+            <FeedbackCard
+              key={score.categoryId}
+              score={score}
+              rubricCategory={activeRubric?.categories.find(c => c.id === score.categoryId)}
+            />
+          ))}
+        </div>
 
       {/* Strengths & improvements */}
       {latestResult.strengths.length > 0 && (
