@@ -6,6 +6,7 @@ import { useRubricStore } from '@/stores/rubricStore'
 import type { Rubric } from '@/types/rubric'
 import EssayEditor from '@/components/EssayEditor'
 import ResultsPanel from './components/ResultsPanel'
+import HistoryPanel from './components/HistoryPanel'
 
 function App() {
   const [showBuilder, setShowBuilder] = useState(false)
@@ -38,6 +39,9 @@ function App() {
               initialRubric={editingRubric}
             />
           )}
+          <div className="px-4 mt-2 overflow-y-auto">
+            <HistoryPanel />
+          </div>
         </div>
       }
       center={<EssayEditor />}
