@@ -2,8 +2,16 @@ import type { Editor } from '@tiptap/react'
 import type { TextIssue } from '@/types/evaluation'
 import { CATEGORY_COLORS } from './highlightEngine'
 
+const CATEGORY_PRIORITY: Record<string, number> = {
+  grammar: 1,
+  clarity: 2,
+  argument: 3,
+  relevance: 4,
+  organization: 5,
+  vocabulary: 6,
+}
+
 export function applyHighlights(editor: Editor, issues: TextIssue[]) {
-  // Clear existing highlights
   editor.chain()
     .selectAll()
     .unsetMark('issueHighlight')
@@ -12,15 +20,27 @@ export function applyHighlights(editor: Editor, issues: TextIssue[]) {
 
   if (!issues.length) return
 
-  const doc = editor.state.doc
-  const docText = doc.textContent
+  // Sort by priority, then by start position
+  const sorted = [...issues].sort((a, b) => {
+    const pa = CATEGORY_PRIORITY[a.category] ?? 99
+    const pb = CATEGORY_PRIORITY[b.category] ?? 99
+    return pa !== pb ? pa - pb : a.start - b.start
+  })
 
-  for (const issue of issues) {
-    // TipTap pos = char offset + 1 (document node adds 1)
+  // Track claimed character ranges
+  const claimed: Array<{ from: number; to: number }> = []
+
+  const overlaps = (from: number, to: number) =>
+    claimed.some(r => from < r.to && to > r.from)
+
+  const docLength = editor.state.doc.content.size
+
+  for (const issue of sorted) {
     const from = issue.start + 1
     const to = issue.end + 1
 
-    if (from < 1 || to > docText.length + 1) continue
+    if (from < 1 || to > docLength) continue
+    if (overlaps(from, to)) continue
 
     editor.chain()
       .setTextSelection({ from, to })
@@ -30,8 +50,9 @@ export function applyHighlights(editor: Editor, issues: TextIssue[]) {
         color: CATEGORY_COLORS[issue.category] ?? '#888888',
       })
       .run()
+
+    claimed.push({ from, to })
   }
 
-  // Deselect
   editor.commands.setTextSelection(0)
 }
