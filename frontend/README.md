@@ -34,3 +34,8 @@ See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rule
 
 ## Future works
 . pasting formated text ( headings , bullets etc) is not included yet
+
+## terminal commands
+venv\Scripts\Activate
+uvicorn main:app --reload
+npm run dev
