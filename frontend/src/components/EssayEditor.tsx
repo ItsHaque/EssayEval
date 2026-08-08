@@ -7,6 +7,7 @@ import { evaluateEssay } from '@/api/evaluate'
 import { useEvaluationStore } from '@/stores/evaluationStore'
 import { IssueHighlight } from '@/lib/highlightEngine'
 import { applyHighlights } from '@/lib/applyHighlights'
+import { parseFile } from '@/lib/fileParser'
 
 export default function EssayEditor() {
   const [wordCount, setWordCount] = useState(0)
@@ -93,14 +94,16 @@ export default function EssayEditor() {
     : false
 
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file || !editor) return
-    const reader = new FileReader()
-    reader.onload = () => {
-      editor.commands.setContent(reader.result as string)
+    try {
+      const text = await parseFile(file)
+      editor.commands.setContent(text)
+    } catch (err) {
+      console.error('File parse failed:', err)
+      alert(`Could not read file: ${(err as Error).message}`)
     }
-    reader.readAsText(file)
   }
 
   if (!editor) return null
@@ -110,8 +113,8 @@ export default function EssayEditor() {
       <div className="flex justify-between items-center">
         <h2 className="text-sm font-semibold">Essay</h2>
         <label className="text-xs text-purple-500 cursor-pointer">
-          Upload .txt
-          <input type="file" accept=".txt" className="hidden" onChange={handleFileUpload} />
+          Upload .docx / .pdf
+          <input type="file" accept=".docx,.pdf" className="hidden" onChange={handleFileUpload} />
         </label>
       </div>
 
