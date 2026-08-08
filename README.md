@@ -1,4 +1,4 @@
-# EduEval — Automatic Essay Evaluation System
+# EssayEval — Automatic Essay Evaluation System
 
 A full-stack web application that automatically evaluates student essays across 6 rubric-defined dimensions using locally-run NLP models. No external AI APIs are used.
 
@@ -35,7 +35,7 @@ FastAPI Backend (Python)
 ### 1. Clone the repository
 
 ```bash
-git clone <repo-url>
+git clone <https://github.com/ItsHaque/EssayEval>
 cd EssayEval
 ```
 
@@ -45,7 +45,6 @@ cd EssayEval
 cd backend
 python -m venv venv
 venv\Scripts\activate        # Windows
-# source venv/bin/activate   # Linux/Mac
 pip install -r requirements.txt
 python -m spacy download en_core_web_sm
 ```
