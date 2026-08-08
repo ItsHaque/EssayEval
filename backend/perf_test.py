@@ -27,11 +27,18 @@ rubric = {
     ]
 }
 
+# warm run
 start = time.time()
 result = asyncio.run(orchestrator.evaluate(text, rubric))
 elapsed = time.time() - start
+print(f'Cold run: {elapsed:.2f}s')
 
-print(f'Time: {elapsed:.2f}s')
+# warm run 2
+start = time.time()
+result = asyncio.run(orchestrator.evaluate(text, rubric))
+elapsed = time.time() - start
+print(f'Warm run: {elapsed:.2f}s')
+
 print(f'Overall: {result["overallScore"]} ({result["letterGrade"]})')
 for cat in result['categoryScores']:
     print(f'  {cat["categoryId"]}: {cat["score"]}')
