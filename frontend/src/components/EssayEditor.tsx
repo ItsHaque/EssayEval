@@ -19,6 +19,11 @@ export default function EssayEditor() {
   const editor = useEditor({
     extensions: [StarterKit, IssueHighlight],
     content: '',
+    editorProps: {
+      attributes: {
+        'aria-label': 'Essay text editor',
+      },
+    },
     onUpdate: ({ editor }) => {
       const text = editor.getText()
       const words = text.trim().split(/\s+/).filter(Boolean)
@@ -112,17 +117,19 @@ export default function EssayEditor() {
     <div className="space-y-3">
       <div className="flex justify-between items-center">
         <h2 className="text-sm font-semibold">Essay</h2>
-        <label className="text-xs text-purple-500 cursor-pointer">
+        <label className="text-xs text-purple-700 cursor-pointer">
           Upload .docx / .pdf
           <input type="file" accept=".docx,.pdf" className="hidden" onChange={handleFileUpload} />
         </label>
       </div>
 
       <div className="border rounded p-3 min-h-[300px] dark:border-gray-700">
-        <EditorContent editor={editor} />
+        <EditorContent
+          editor={editor}
+        />
       </div>
 
-      <div className={`text-xs ${isOutsideLimit ? 'text-red-500' : 'text-gray-400'}`}>
+      <div className={`text-xs ${isOutsideLimit ? 'text-red-500' : 'text-gray-600'}`}>
         {wordCount} words
         {activeRubric && ` (limit: ${activeRubric.wordLimitMin}–${activeRubric.wordLimitMax})`}
       </div>

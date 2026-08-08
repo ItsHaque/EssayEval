@@ -56,19 +56,19 @@ export default function RubricSelector({ onEdit }: Props) {
           <div className="flex gap-2">
             <button
               onClick={e => { e.stopPropagation(); onEdit(r.id) }}
-              className="text-xs text-blue-500"
+              className="text-xs text-blue-700"
             >
               Edit
             </button>
             <button
               onClick={e => { e.stopPropagation(); handleExport(r.id) }}
-              className="text-xs text-green-500"
+              className="text-xs text-green-700"
             >
               Export
             </button>
             <button
               onClick={e => { e.stopPropagation(); deleteRubric(r.id) }}
-              className="text-xs text-red-500"
+              className="text-xs text-red-700"
             >
               Delete
             </button>
@@ -76,7 +76,7 @@ export default function RubricSelector({ onEdit }: Props) {
         </div>
       ))}
 
-      <label className="block text-xs text-purple-500 cursor-pointer">
+      <label className="block text-xs text-purple-700 cursor-pointer">
         Import JSON
         <input type="file" accept=".json" className="hidden" onChange={handleImport} />
       </label>

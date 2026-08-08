@@ -39,3 +39,6 @@ See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rule
 venv\Scripts\Activate
 uvicorn main:app --reload
 npm run dev
+git add .
+git commit -m "commit message"
+git push

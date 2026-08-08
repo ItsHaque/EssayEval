@@ -29,7 +29,7 @@ function App() {
           <RubricSelector onEdit={(id) => { setEditingRubricId(id); setShowBuilder(true) }} />
           <button
             onClick={() => { setShowBuilder(b => !b); setEditingRubricId(null) }}
-            className="mx-4 mb-4 py-1 rounded border border-purple-500 text-purple-500 text-xs"
+            className="mx-4 mb-4 py-1 rounded border border-purple-700 text-purple-700 text-xs"
           >
             {showBuilder ? 'Hide Builder' : '+ New Rubric'}
           </button>

@@ -38,7 +38,7 @@ export default function ResultsPanel() {
 
   if (!latestResult) {
     return (
-      <div className="p-4 text-sm text-gray-400">
+      <div className="p-4 text-sm text-gray-600">
         No results yet. Select a rubric and click Evaluate.
       </div>
     )
@@ -78,7 +78,7 @@ export default function ResultsPanel() {
       <div className="flex justify-end">
         <button
           onClick={() => exportToPDF(activeSubmission?.label ?? 'Report')}
-          className="text-xs px-3 py-1 rounded border border-purple-500 text-purple-500 hover:bg-purple-50"
+          className="text-xs px-3 py-1 rounded border border-purple-500 text-purple-700 hover:bg-purple-50"
         >
           Export PDF
         </button>
@@ -94,7 +94,7 @@ export default function ResultsPanel() {
             {latestResult.letterGrade}
           </div>
           <div className="text-sm text-gray-500">{BAND_LABELS[overallBand]}</div>
-          <div className="text-xs text-gray-400 mt-1">
+          <div className="text-xs text-gray-600 mt-1">
             Evaluated {new Date(latestResult.evaluatedAt).toLocaleTimeString()}
           </div>
         </div>

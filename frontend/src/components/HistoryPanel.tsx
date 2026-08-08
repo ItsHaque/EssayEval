@@ -34,18 +34,18 @@ export default function HistoryPanel() {
                 {sub.label}
               </span>
               {result && (
-                <span className="text-xs font-semibold text-purple-600">
+                <span className="text-xs font-semibold text-purple-700">
                   {result.overallScore.toFixed(0)}%
                 </span>
               )}
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-xs text-gray-400">
+              <span className="text-xs text-gray-600">
                 {new Date(sub.createdAt).toLocaleDateString()}
               </span>
               <button
                 onClick={() => deleteSubmission(sub.id)}
-                className="text-xs text-red-400 hover:text-red-600"
+                className="text-xs text-red-700 hover:text-red-700"
               >
                 Delete
               </button>
