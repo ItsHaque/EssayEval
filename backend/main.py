@@ -4,11 +4,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import orchestrator
 from lib.embeddings import get_model
+from analyzers.ml_scorer import _load as load_ml
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    get_model()  # pre-warm on startup
+    get_model()  # sentence-transformers
+    load_ml()      # ML scorer
     yield
 
 

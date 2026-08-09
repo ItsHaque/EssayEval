@@ -2,6 +2,7 @@ import uuid
 from datetime import datetime, timezone
 from analyzers import clarity, vocabulary, grammar, relevance, organization, argument
 from lib.scoring import compute_band, compute_grade, compute_overall
+from analyzers import ml_scorer
 
 REGISTRY = {
     'cat_clarity': clarity.analyze,
@@ -10,6 +11,7 @@ REGISTRY = {
     'cat_relevance': relevance.analyze,
     'cat_organization': organization.analyze,
     'cat_argument': argument.analyze,
+    'cat_ml_quality': ml_scorer.analyze,
 }
 
 BAND_LABELS = {4: "Excellent", 3: "Good", 2: "Needs Improvement", 1: "Poor"}

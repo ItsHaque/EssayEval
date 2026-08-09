@@ -8,6 +8,7 @@ const FIXED_CATEGORIES: Pick<RubricCategory, 'id' | 'name'>[] = [
   { id: 'cat_relevance', name: 'Relevance' },
   { id: 'cat_organization', name: 'Organization' },
   { id: 'cat_argument', name: 'Argument Quality' },
+  { id: 'cat_ml_quality', name: 'Overall (ML)' },
 ]
 
 const BAND_DESCRIPTORS: Record<string, Record<number, string>> = {
@@ -46,6 +47,12 @@ const BAND_DESCRIPTORS: Record<string, Record<number, string>> = {
     3: 'Most claims supported with adequate evidence',
     2: 'Some claims lack supporting evidence',
     1: 'Claims are unsupported or reasoning is unclear',
+  },
+  cat_ml_quality: {
+    4: 'Essay demonstrates excellent overall writing quality',
+    3: 'Essay demonstrates good overall writing quality',
+    2: 'Essay demonstrates developing overall writing quality',
+    1: 'Essay demonstrates beginning overall writing quality',
   },
 }
 

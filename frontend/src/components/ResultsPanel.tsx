@@ -100,11 +100,18 @@ export default function ResultsPanel() {
         </div>
 
         {/* Bar chart */}
-        <Bar data={barData} options={{
-          indexAxis: 'y', responsive: true,
-          scales: { x: { min: 0, max: 100 } },
-          plugins: { legend: { display: false } }
-        }} />
+        <div style={{ height: '280px' }}>
+          <Bar
+            data={barData}
+            options={{
+              indexAxis: 'y',
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: { x: { min: 0, max: 100 } },
+              plugins: { legend: { display: false } }
+            }}
+          />
+        </div>
 
         {/* Radar chart */}
         <Radar data={radarData} options={{
