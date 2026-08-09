@@ -36,7 +36,7 @@ export default function RubricSelector({ onEdit }: Props) {
 
   return (
     <div className="p-4 space-y-3">
-      <h2 className="text-sm font-semibold">Rubrics</h2>
+      <h2 className="text-sm font-bold uppercase tracking-wide" style={{ color: '#1d4533' }}>Rubrics</h2>
 
       {rubrics.length === 0 && (
         <p className="text-xs text-gray-400">No rubrics yet. Create one below.</p>
@@ -45,30 +45,30 @@ export default function RubricSelector({ onEdit }: Props) {
       {rubrics.map(r => (
         <div
           key={r.id}
-          className={`border rounded p-2 space-y-1 cursor-pointer ${
-            activeRubricId === r.id
-              ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20'
-              : 'dark:border-gray-700'
-          }`}
+          className="rounded-lg p-2 space-y-2 cursor-pointer"
+          style={{
+            border: activeRubricId === r.id ? '2px solid #1d4533' : '1px solid #f9d2ba',
+            backgroundColor: activeRubricId === r.id ? '#f9d2ba' : 'white',
+          }}
           onClick={() => setActiveRubric(r.id)}
         >
           <div className="text-sm font-medium">{r.name}</div>
           <div className="flex gap-2">
             <button
               onClick={e => { e.stopPropagation(); onEdit(r.id) }}
-              className="text-xs text-blue-700"
+              className="text-xs px-2 py-0.5 rounded font-medium hover:opacity-80" style={{ backgroundColor: '#1d4533', color: '#f7eae0' }}
             >
               Edit
             </button>
             <button
               onClick={e => { e.stopPropagation(); handleExport(r.id) }}
-              className="text-xs text-green-700"
+              className="text-xs px-2 py-0.5 rounded font-medium hover:opacity-80" style={{ backgroundColor: '#8B4513', color: '#f7eae0' }}
             >
               Export
             </button>
             <button
               onClick={e => { e.stopPropagation(); deleteRubric(r.id) }}
-              className="text-xs text-red-700"
+              className="text-xs px-2 py-0.5 rounded font-medium hover:opacity-80" style={{ backgroundColor: '#5e3122', color: '#f7eae0' }}
             >
               Delete
             </button>
@@ -76,7 +76,7 @@ export default function RubricSelector({ onEdit }: Props) {
         </div>
       ))}
 
-      <label className="block text-xs text-purple-700 cursor-pointer">
+      <label className="block text-xs px-3 py-1.5 rounded text-center font-medium cursor-pointer hover:opacity-80" style={{ backgroundColor: '#f9d2ba', color: '#1d4533' }}>
         Import JSON
         <input type="file" accept=".json" className="hidden" onChange={handleImport} />
       </label>

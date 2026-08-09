@@ -9,6 +9,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   relevance: '#ea580c',
   organization: '#0d9488',
   argument: '#ca8a04',
+  ml_quality: '#1d4533',
 }
 
 interface Props {
@@ -25,11 +26,12 @@ export default function FeedbackCard({ score, rubricCategory }: Props) {
   const bandDescriptor = rubricCategory?.bands[score.band as 1|2|3|4] ?? ''
 
   return (
-    <div className="border rounded-lg overflow-hidden dark:border-gray-700">
+    <div className="rounded-lg overflow-hidden" style={{ border: '1px solid #f9d2ba' }}>
       {/* Header */}
       <button
         onClick={() => setOpen(o => !o)}
-        className="w-full flex items-center justify-between px-3 py-2 text-left hover:bg-gray-50 dark:hover:bg-gray-800"
+        className="w-full flex items-center justify-between px-3 py-2 text-left hover:opacity-80"
+        style={{ backgroundColor: '#f7eae0' }}
       >
         <div className="flex items-center gap-2">
           <span
@@ -44,17 +46,17 @@ export default function FeedbackCard({ score, rubricCategory }: Props) {
           <span className="text-xs font-semibold" style={{ color }}>
             {score.score.toFixed(0)}%
           </span>
-          <span className="text-xs text-gray-400">{score.bandLabel}</span>
-          <span className="text-xs text-gray-400">{open ? '▲' : '▼'}</span>
+          <span className="text-xs" style={{ color: '#5e3122' }}>{score.bandLabel}</span>
+          <span className="text-xs" style={{ color: '#5e3122' }}>{open ? '▲' : '▼'}</span>
         </div>
       </button>
 
       {/* Body */}
       {open && (
-        <div className="px-3 pb-3 space-y-2 border-t dark:border-gray-700">
+        <div className="px-3 pb-3 space-y-2" style={{ borderTop: '1px solid #f9d2ba' }}>
           {/* Band descriptor from rubric */}
           {bandDescriptor && (
-            <p className="text-xs text-gray-500 dark:text-gray-400 pt-2 italic">
+            <p className="text-xs pt-2 italic" style={{ color: '#5e3122' }}>
               {bandDescriptor}
             </p>
           )}
@@ -62,12 +64,12 @@ export default function FeedbackCard({ score, rubricCategory }: Props) {
           {/* Suggestions */}
           {score.suggestions.length > 0 && (
             <div>
-              <div className="text-xs font-semibold text-gray-600 dark:text-gray-300 mb-1">
+              <div className="text-xs font-semibold mb-1" style={{ color: '#1d4533' }}>
                 Suggestions
               </div>
               <ul className="space-y-1">
                 {score.suggestions.map((s, i) => (
-                  <li key={i} className="text-xs text-gray-600 dark:text-gray-300 flex gap-1">
+                  <li key={i} className="text-xs flex gap-1" style={{ color: '#1d4533' }}>
                     <span style={{ color }}>→</span>
                     <span>{s}</span>
                   </li>
@@ -78,7 +80,7 @@ export default function FeedbackCard({ score, rubricCategory }: Props) {
 
           {/* Issue count */}
           {score.issues.length > 0 && (
-            <div className="text-xs text-gray-400">
+            <div className="text-xs" style={{ color: '#5e3122' }}>
               {score.issues.length} issue{score.issues.length > 1 ? 's' : ''} detected
             </div>
           )}

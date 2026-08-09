@@ -117,13 +117,13 @@ export default function EssayEditor() {
     <div className="space-y-3">
       <div className="flex justify-between items-center">
         <h2 className="text-sm font-semibold">Essay</h2>
-        <label className="text-xs text-purple-700 cursor-pointer">
+        <label className="text-xs font-medium px-3 py-1 rounded cursor-pointer hover:opacity-80" style={{ backgroundColor: '#f9d2ba', color: '#1d4533' }}>
           Upload .docx / .pdf
           <input type="file" accept=".docx,.pdf" className="hidden" onChange={handleFileUpload} />
         </label>
       </div>
 
-      <div className="border rounded p-3 min-h-[300px] dark:border-gray-700">
+      <div className="rounded p-3 min-h-[300px]" style={{ border: '1px solid #f9d2ba' }}>
         <EditorContent
           editor={editor}
         />
@@ -136,7 +136,8 @@ export default function EssayEditor() {
       <button
         onClick={handleEvaluate}
         disabled={!activeRubric || isEvaluating}
-        className="w-full py-2 rounded bg-purple-600 text-white text-sm font-medium disabled:opacity-50"
+        className="w-full py-2 rounded text-sm font-semibold disabled:opacity-50 hover:opacity-90"
+        style={{ backgroundColor: '#1d4533', color: '#f7eae0' }}
       >
         {isEvaluating ? 'Evaluating...' : 'Evaluate'}
       </button>

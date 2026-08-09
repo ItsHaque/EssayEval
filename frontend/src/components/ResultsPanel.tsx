@@ -23,8 +23,8 @@ const BAND_LABELS: Record<number, string> = {
 }
 
 const gradeColor: Record<string, string> = {
-  A: 'text-green-600', B: 'text-blue-600',
-  C: 'text-yellow-600', D: 'text-orange-600', F: 'text-red-600'
+  A: 'text-green-700', B: 'text-green-600',
+  C: 'text-yellow-700', D: 'text-orange-700', F: 'text-red-700'
 }
 
 export default function ResultsPanel() {
@@ -61,9 +61,9 @@ export default function ResultsPanel() {
     labels,
     datasets: [{
       label: 'Scores', data: scores,
-      backgroundColor: 'rgba(147, 51, 234, 0.2)',
-      borderColor: 'rgba(147, 51, 234, 0.8)',
-      pointBackgroundColor: 'rgba(147, 51, 234, 1)',
+      backgroundColor: 'rgba(29, 69, 51, 0.2)',
+      borderColor: 'rgba(29, 69, 51, 0.8)',
+      pointBackgroundColor: 'rgba(29, 69, 51, 1)',
     }]
   }
 
@@ -78,14 +78,15 @@ export default function ResultsPanel() {
       <div className="flex justify-end">
         <button
           onClick={() => exportToPDF(activeSubmission?.label ?? 'Report')}
-          className="text-xs px-3 py-1 rounded border border-purple-500 text-purple-700 hover:bg-purple-50"
+          className="text-xs px-3 py-1 rounded font-medium hover:opacity-80"
+          style={{ backgroundColor: '#5e3122', color: '#f7eae0' }}
         >
           Export PDF
         </button>
       </div>
 
       {/* Report content */}
-      <div id="report" className="space-y-4 bg-white p-2">
+      <div id="report" className="space-y-4 p-2" style={{ backgroundColor: '#f7eae0' }}>
 
         {/* Overall score */}
         <div className="text-center">
@@ -122,7 +123,7 @@ export default function ResultsPanel() {
 
         {/* Feedback Cards */}
         <div className="space-y-2">
-          <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: '#1d4533' }}>
             Category Feedback
           </div>
           {latestResult.categoryScores.map(score => (
@@ -137,7 +138,7 @@ export default function ResultsPanel() {
         {/* Strengths */}
         {latestResult.strengths.length > 0 && (
           <div>
-            <div className="text-xs font-semibold text-green-600 mb-1">Strengths</div>
+            <div className="text-xs font-semibold mb-1" style={{ color: '#1d4533' }}>Strengths</div>
             {latestResult.strengths.map((s, i) => (
               <div key={i} className="text-xs text-gray-600 dark:text-gray-300">✓ {s}</div>
             ))}
@@ -147,7 +148,7 @@ export default function ResultsPanel() {
         {/* Improvements */}
         {latestResult.improvements.length > 0 && (
           <div>
-            <div className="text-xs font-semibold text-red-500 mb-1">Improvements</div>
+            <div className="text-xs font-semibold mb-1" style={{ color: '#5e3122' }}>Improvements</div>
             {latestResult.improvements.map((s, i) => (
               <div key={i} className="text-xs text-gray-600 dark:text-gray-300">✗ {s}</div>
             ))}

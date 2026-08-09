@@ -126,17 +126,21 @@ export default function RubricBuilder({ onSave, initialRubric }: Props) {
         <div className="flex gap-2">
           <input
             type="number"
-            className="w-full border rounded px-3 py-2 text-sm dark:bg-gray-800 dark:border-gray-600"
+            className="w-full rounded px-3 py-2 text-sm"
+            style={{ border: '1px solid #f9d2ba' }}
             placeholder="Min words"
-            value={wordLimitMin}
-            onChange={e => setWordLimitMin(Number(e.target.value))}
+            value={wordLimitMin === 0 ? '' : wordLimitMin}
+            onChange={e => setWordLimitMin(e.target.value === '' ? 0 : Number(e.target.value))}
+            onWheel={e => (e.target as HTMLInputElement).blur()}
           />
           <input
             type="number"
-            className="w-full border rounded px-3 py-2 text-sm dark:bg-gray-800 dark:border-gray-600"
+            className="w-full rounded px-3 py-2 text-sm"
+            style={{ border: '1px solid #f9d2ba' }}
             placeholder="Max words"
-            value={wordLimitMax}
-            onChange={e => setWordLimitMax(Number(e.target.value))}
+            value={wordLimitMax === 0 ? '' : wordLimitMax}
+            onChange={e => setWordLimitMax(e.target.value === '' ? 0 : Number(e.target.value))}
+            onWheel={e => (e.target as HTMLInputElement).blur()}
           />
         </div>
       </div>
@@ -156,9 +160,11 @@ export default function RubricBuilder({ onSave, initialRubric }: Props) {
                 type="number"
                 min={0}
                 max={100}
-                className="w-16 border rounded px-2 py-1 text-sm dark:bg-gray-800 dark:border-gray-600"
-                value={weights[cat.id]}
-                onChange={e => updateWeight(cat.id, Number(e.target.value))}
+                className="w-16 border rounded px-2 py-1 text-sm"
+                style={{ borderColor: '#f9d2ba' }}
+                value={weights[cat.id] === 0 ? '' : weights[cat.id]}
+                onChange={e => updateWeight(cat.id, e.target.value === '' ? 0 : Number(e.target.value))}
+                onWheel={e => (e.target as HTMLInputElement).blur()}
               />
               <span className="text-sm">%</span>
             </div>
@@ -169,7 +175,8 @@ export default function RubricBuilder({ onSave, initialRubric }: Props) {
       <button
         onClick={handleSave}
         disabled={!weightValid || !name.trim()}
-        className="w-full py-2 rounded bg-purple-600 text-white text-sm font-medium disabled:opacity-50"
+        className="w-full py-2 rounded text-sm font-medium disabled:opacity-50 hover:opacity-90"
+        style={{ backgroundColor: '#1d4533', color: '#f7eae0' }}
       >
         Save Rubric
       </button>

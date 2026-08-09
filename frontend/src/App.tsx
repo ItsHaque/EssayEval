@@ -6,7 +6,6 @@ import { useRubricStore } from '@/stores/rubricStore'
 import type { Rubric } from '@/types/rubric'
 import EssayEditor from '@/components/EssayEditor'
 import ResultsPanel from './components/ResultsPanel'
-import HistoryPanel from './components/HistoryPanel'
 
 function App() {
   const [showBuilder, setShowBuilder] = useState(false)
@@ -29,7 +28,8 @@ function App() {
           <RubricSelector onEdit={(id) => { setEditingRubricId(id); setShowBuilder(true) }} />
           <button
             onClick={() => { setShowBuilder(b => !b); setEditingRubricId(null) }}
-            className="mx-4 mb-4 py-1 rounded border border-purple-700 text-purple-700 text-xs"
+            className="mx-4 mb-4 py-2 rounded text-sm font-medium hover:opacity-90"
+            style={{ backgroundColor: '#1d4533', color: '#f7eae0' }}
           >
             {showBuilder ? 'Hide Builder' : '+ New Rubric'}
           </button>
@@ -39,9 +39,6 @@ function App() {
               initialRubric={editingRubric}
             />
           )}
-          <div className="px-4 mt-2 overflow-y-auto">
-            <HistoryPanel />
-          </div>
         </div>
       }
       center={<EssayEditor />}

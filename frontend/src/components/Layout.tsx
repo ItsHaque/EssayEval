@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 interface LayoutProps {
   left: React.ReactNode
@@ -9,35 +9,24 @@ interface LayoutProps {
 export default function Layout({ left, center, right }: LayoutProps) {
   const [leftOpen, setLeftOpen] = useState(true)
   const [rightOpen, setRightOpen] = useState(true)
-  const [dark, setDark] = useState(false)
-
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', dark)
-  }, [dark])
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <div className="min-h-screen" style={{ backgroundColor: '#f7eae0', color: '#1d4533' }}>
       {/* Top bar */}
-      <header className="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700">
-        <span className="font-semibold text-lg">EssayEval</span>
+      <header style={{ backgroundColor: '#1d4533' }} className="flex items-center justify-between px-4 py-3">
+        <span className="font-bold text-lg tracking-wide" style={{ color: '#f7eae0' }}>EssayEval</span>
         <div className="flex gap-2">
           <button
             onClick={() => setLeftOpen(o => !o)}
-            className="text-sm px-2 py-1 rounded border border-gray-300 dark:border-gray-600"
+            className = "text-sm px-3 py-1 rounded font-medium hover:opacity-90" style={{ backgroundColor: '#f9d2ba', color: '#1d4533' }}
           >
             {leftOpen ? '← Hide' : '→ Panel'}
           </button>
           <button
             onClick={() => setRightOpen(o => !o)}
-            className="text-sm px-2 py-1 rounded border border-gray-300 dark:border-gray-600"
+            className = "text-sm px-3 py-1 rounded font-medium hover:opacity-90" style={{ backgroundColor: '#f9d2ba', color: '#1d4533' }}
           >
             {rightOpen ? 'Hide →' : 'Panel ←'}
-          </button>
-          <button
-            onClick={() => setDark(d => !d)}
-            className="text-sm px-2 py-1 rounded border border-gray-300 dark:border-gray-600"
-          >
-            {dark ? '☀️' : '🌑'}
           </button>
         </div>
       </header>
@@ -51,7 +40,7 @@ export default function Layout({ left, center, right }: LayoutProps) {
         }}
       >
         {/* Left panel */}
-        <div className={`overflow-hidden border-r border-gray-200 dark:border-gray-700 ${leftOpen ? '' : 'invisible'}`}>
+        <div className={`overflow-hidden ${leftOpen ? '' : 'invisible'}`} style={{ borderRight: '1px solid #f9d2ba' }}>
           {left}
         </div>
 
@@ -61,7 +50,7 @@ export default function Layout({ left, center, right }: LayoutProps) {
         </div>
 
         {/* Right panel */}
-        <div className={`overflow-hidden border-l border-gray-200 dark:border-gray-700 ${rightOpen ? '' : 'invisible'}`}>
+        <div className={`overflow-hidden ${rightOpen ? '' : 'invisible'}`} style={{ borderLeft: '1px solid #f9d2ba' }}>
           {right}
         </div>
       </div>
